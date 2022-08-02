@@ -11,3 +11,7 @@ Toda vez que o front-end tenta se comunicar com o back-end, é feita uma requisi
 
 **Para instalar:**
 npm i cors
+
+**Maneiras de transformar uma string para number em js:**
+const parametro_id = Number(req.params.id);
+const parametro_id = +req.params.id; (o + na frente é uma particularidade só do js, então para ficar mais bacana para geral é melhor usar o jeito acima).
