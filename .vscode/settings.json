@@ -1,0 +1,11 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true //salvar automaticamente
+  },
+  "files.eol": "\n", //pular linhas nos nossos arquivos
+  "files.insertFinalNewline": true, //colocando uma última linha ao final do arquivo
+  "editor.defaultFormatter": "esbenp.prettier-vscode", //utilizando o formatador prettier como padrão
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
