@@ -50,8 +50,14 @@ module.exports = {
   deletePaletaController,
 };
 
+/* 
+  controller = sobre o controller é bom entender que cada função que está sendo executada está recebendo uma requisição e enviando uma resposta.
+  é bom ressaltar que o controller não é responsável por buscar os dados, ele apenas recebe uma requisição e devolve uma resposta, além de chamar o nosso service, ele sim é responsável por buscar e nos entregar os dados que estão sendo requisitados.
+  o nome do controller é bem explicativo hahaha, já que ele controla a nossa aplicação nele além de nossas requisições e respostas podemos ter também validações.
+*/
+
 /*
   mais um cometário importante (vou colocar no route, controller e service):
   fluxo:
-  acessamos a nossa rota via controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
+  acessamos a nossa rota em alguma função do controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
 */

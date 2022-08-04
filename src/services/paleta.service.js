@@ -66,7 +66,11 @@ module.exports = {
 };
 
 /*
+  service = sobre o service é importânte ressaltar que ele não trata os nossos dados, a função dele é apenas pegar os dados e retornar para o nosso controller (aqui estamos mockando dados mas futuramente o service irá servir para pegar dados lá do nosso banco de dados).
+*/
+
+/*
   mais um cometário importante (vou colocar no route, controller e service):
   fluxo:
-  acessamos a nossa rota via controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
+  acessamos a nossa rota em alguma função do controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
 */

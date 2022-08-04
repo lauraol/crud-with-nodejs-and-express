@@ -19,5 +19,5 @@ module.exports = router; // exportando o arquivo paleta.route.js que contém tod
 /*
   mais um cometário importante (vou colocar no route, controller e service):
   fluxo:
-  acessamos a nossa rota via controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
+  acessamos a nossa rota em alguma função do controller > controller chama o service > service manda o que foi solicitado para a controler > controler exibe o que a função pede.
 */
