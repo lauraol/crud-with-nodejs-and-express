@@ -4,12 +4,24 @@ const paletasService = require('../services/paleta.service');
 // get all
 const findAllPaletasController = (req, res) => {
   const paletas = paletasService.findAllPaletasService();
+
+  if (paletas.length == 0) {
+    return res
+      .status(404)
+      .send({ message: 'Não existe nenhuma paleta cadastrada!' });
+  }
   res.send(paletas); // OBS: o send cria uma página html para que possamos acessar a API pelo navegador.
 };
 
 // get by id
 const findByIdPaletaController = (req, res) => {
   const parametroId = Number(req.params.id);
+
+  // primeira validação:
+  // a primeira validação irá ver se recebemos um id no parametroId.
+  if (!parametroId) {
+    return res.status(400).send({ message: 'Id inválido!' });
+  }
 
   const escolhaPaleta = paletasService.findByIdPaletaService(parametroId);
   /* 
@@ -18,25 +30,71 @@ const findByIdPaletaController = (req, res) => {
     o id existindo na aplicação ele adiciona na const escolhaPaleta e apresenta a resposta para o usuário.
    */
 
+  // segunda validação:
+  // a segunda validação irá verificar se esse id existe no nosso array de objetos.
+  if (!escolhaPaleta) {
+    return res.status(404).send({ message: 'Paleta não encontrada!' });
+  }
+
   res.send(escolhaPaleta);
 };
 
 const createPaletaController = (req, res) => {
   const paleta = req.body; // vem de lá do body no thunder client
+
+  // validação para que não seja possível enviar nenhum dos campos vazios na nossa paleta.
+  if (
+    !paleta ||
+    !paleta.sabor ||
+    !paleta.descricao ||
+    !paleta.foto ||
+    !paleta.preco
+  ) {
+    return res
+      .status(400)
+      .send({ message: 'Envie todos os campos da paleta!' });
+  }
   const newPaleta = paletasService.createPaletaService(paleta);
-  res.send(newPaleta);
+  res.status(201).send(newPaleta);
 };
 
 const updatePaletaController = (req, res) => {
   const idParam = Number(req.params.id); // recebendo o id
+
+  // validando se o id é válido:
+  if (!idParam) {
+    return res.status(400).send({ message: 'Id inválido!' });
+  }
+
   const paletaEdit = req.body; // recendo o body pq preciso saber o que irei trocar
+
+  // validando se a paleta existe:
+  if (
+    !paletaEdit ||
+    !paletaEdit.sabor ||
+    !paletaEdit.descricao ||
+    !paletaEdit.foto ||
+    !paletaEdit.preco
+  ) {
+    return res
+      .status(404)
+      .send({ message: 'Envie todos os campos da paleta!' });
+  }
+
   const updatedPaleta = paletasService.updatePaletaService(idParam, paletaEdit);
   res.send(updatedPaleta);
 };
 
 const deletePaletaController = (req, res) => {
-  const idParam = req.params.id;
+  const idParam = Number(req.params.id);
+
+  // validando se o id existe:
+  if (!idParam) {
+    return res.status(400).send({ message: 'Id inválido!' });
+  }
+
   paletasService.deletePaletaService(idParam);
+
   res.send({ message: 'Paleta deletada com sucesso!' }); // realizando o retorno da mensagem em formato de json
   // obs: não fazemos o retorno da paleta com o send pq a paleta foi apagada. Portando, no send podemos enviar  :)
 };
