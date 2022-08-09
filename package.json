@@ -20,7 +20,8 @@
   "homepage": "https://github.com/lauraol/crud-with-nodejs-and-express#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mongoose": "^6.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

@@ -6,9 +6,12 @@
 const express = require('express'); // importando o express no projeto.
 const cors = require('cors'); // importando o cors no nosso projeto.
 const routes = require('./src/routes/paleta.route');
+const connectToDatabase = require('./src/database/database');
 
 const port = 3000; // indicando a porta que o nosso servidor irá rodar.
 const app = express(); // executando o express.
+
+connectToDatabase();
 
 app.use(express.json()); // tranformando todas as minhas respostas em json.
 app.use(cors());
