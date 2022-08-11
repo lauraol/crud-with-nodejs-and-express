@@ -22,13 +22,8 @@ const updatePaletaService = async (id, paletaEdited) => {
   return paletaUpdate; // retornando a paleta editada.
 };
 
-const deletePaletaService = (id) => {
-  const paletaIndex = paletas.findIndex((paleta) => paleta.id == id); // // procurando o id que será alterado no meu array de objetos. Quando a função achar o id que estou pedindo ele será adicionado em paletaIndex.
-  return paletas.splice(paletaIndex, 1); // pegamos o index que tem dentro de paletaIndex e utilizamos o método splice.
-
-  // relembrando:
-  // o splice altera o conteúdo de uma lista, adicionando novos elementos enquanto remove elementos antigos.
-  // então na função passamos o index que queremos remover por meio do paletaIndex e o 1 indica que iremos remover só aquele index.
+const deletePaletaService = async (id) => {
+  return await Paletas.findByIdAndDelete(id);
 };
 
 // enviando meu objeto com as minhas funções para o restante da aplicação:

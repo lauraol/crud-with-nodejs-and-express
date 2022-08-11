@@ -89,15 +89,15 @@ const updatePaletaController = async (req, res) => {
   res.send(updatedPaleta);
 };
 
-const deletePaletaController = (req, res) => {
-  const idParam = Number(req.params.id);
+const deletePaletaController = async (req, res) => {
+  const idParam = req.params.id;
 
   // validando se o id existe:
-  if (!idParam) {
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
-  paletasService.deletePaletaService(idParam);
+  await paletasService.deletePaletaService(idParam);
 
   res.send({ message: 'Paleta deletada com sucesso!' }); // realizando o retorno da mensagem em formato de json
   // obs: não fazemos o retorno da paleta com o send pq a paleta foi apagada. Portando, no send podemos enviar  :)
