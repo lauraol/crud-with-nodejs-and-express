@@ -1,36 +1,14 @@
-const paletas = [
-  {
-    id: 1,
-    sabor: 'Açaí com Leite Condensado',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: 'assets/images/acai-com-leite-condensado.png',
-    preco: 10.0,
-  },
-  {
-    id: 2,
-    sabor: 'Banana com Nutella',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: 'assets/images/banana-com-nutella.png',
-    preco: 10.0,
-  },
-  {
-    id: 3,
-    sabor: 'Chocolate Belga',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: 'assets/images/chocolate-belga.png',
-    preco: 7.0,
-  },
-];
+const Paletas = require('../models/Paleta');
 
-const findAllPaletasService = () => {
+const findAllPaletasService = async () => {
+  const paletas = await Paletas.find(); // método nativo do mongoose que faz uma busca de todsos os documentos na minha collection.
   return paletas;
 };
 
-const findByIdPaletaService = (parametroId) => {
-  return paletas.find((paleta) => paleta.id === parametroId); // comparando o id de paleta.id se é igual ao recebido em parametroId.
+const findByIdPaletaService = async (parametroId) => {
+  const paleta = await Paletas.findById(parametroId); //findById é uma funçãozinha nativa c:
+  return paleta;
+  // return paletas.find((paleta) => paleta.id === parametroId); // comparando o id de paleta.id se é igual ao recebido em parametroId.
 };
 
 const createPaletaService = (newPaleta) => {

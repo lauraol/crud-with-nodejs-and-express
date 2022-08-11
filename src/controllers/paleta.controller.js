@@ -1,9 +1,10 @@
 const paletasService = require('../services/paleta.service');
+const mongoose = require('mongoose');
 
 // declaração de um endpoint, no caso utilizando o método GET, nesse caso preparamos a aplicação para receber uma requisição e enviar uma resposta.
 // get all
-const findAllPaletasController = (req, res) => {
-  const paletas = paletasService.findAllPaletasService();
+const findAllPaletasController = async (req, res) => {
+  const paletas = await paletasService.findAllPaletasService();
 
   if (paletas.length == 0) {
     return res
@@ -14,16 +15,16 @@ const findAllPaletasController = (req, res) => {
 };
 
 // get by id
-const findByIdPaletaController = (req, res) => {
-  const parametroId = Number(req.params.id);
+const findByIdPaletaController = async (req, res) => {
+  const parametroId = req.params.id;
 
   // primeira validação:
-  // a primeira validação irá ver se recebemos um id no parametroId.
-  if (!parametroId) {
+  // a primeira validação irá ver se recebemos um id no parametroId e se é um id valido e que temos lá no mongoose.
+  if (!mongoose.Types.ObjectId.isValid(parametroId)) {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
-  const escolhaPaleta = paletasService.findByIdPaletaService(parametroId);
+  const escolhaPaleta = await paletasService.findByIdPaletaService(parametroId);
   /* 
     explicação da função abaixo:
     está sendo realizado um find, então esse find irá comparar o parametroId com o id vindo do objeto para ver se aquele id existe na nossa aplicação.
