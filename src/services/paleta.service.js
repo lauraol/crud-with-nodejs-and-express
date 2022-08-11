@@ -1,29 +1,29 @@
 const Paletas = require('../models/Paleta');
 
 const findAllPaletasService = async () => {
-  const paletas = await Paletas.find(); // método nativo do mongoose que faz uma busca de todsos os documentos na minha collection.
-  return paletas;
+  const allPaletas = await Paletas.find(); // método nativo do mongoose que faz uma busca de todsos os documentos na minha collection.
+  return allPaletas;
 };
 
-const findByIdPaletaService = async (parametroId) => {
-  const paleta = await Paletas.findById(parametroId); //findById é uma funçãozinha nativa c:
-  return paleta;
+const findByIdPaletaService = async (idParam) => {
+  const onePaleta = await Paletas.findById(idParam); //findById é uma funçãozinha nativa c:
+  return onePaleta;
   // return paletas.find((paleta) => paleta.id === parametroId); // comparando o id de paleta.id se é igual ao recebido em parametroId.
 };
 
 const createPaletaService = async (newPaleta) => {
   // recebemos a newPaleta que vem do nosso controller.
-  const paletaCreated = await Paletas.create(newPaleta); // agora ao invés de push vamos usar o método create que é nativo para fazer a criação de uma nova paleta.
-  return paletaCreated; // retornando a paleta criada para o cliente.
+  const createdPaleta = await Paletas.create(newPaleta); // agora ao invés de push vamos usar o método create que é nativo para fazer a criação de uma nova paleta.
+  return createdPaleta; // retornando a paleta criada para o cliente.
 };
 
-const updatePaletaService = async (id, paletaEdited) => {
-  const paletaUpdate = await Paletas.findByIdAndUpdate(id, paletaEdited); // o findByIdAndUpdate vai procurar o meu id lá no meu array de objetos e vai editar o item que está sendo pedido.
-  return paletaUpdate; // retornando a paleta editada.
+const updatePaletaService = async (idParam, editPaleta) => {
+  const updatePaleta = await Paletas.findByIdAndUpdate(idParam, editPaleta); // o findByIdAndUpdate vai procurar o meu id lá no meu array de objetos e vai editar o item que está sendo pedido.
+  return updatePaleta; // retornando a paleta editada.
 };
 
-const deletePaletaService = async (id) => {
-  return await Paletas.findByIdAndDelete(id);
+const deletePaletaService = async (idParam) => {
+  return await Paletas.findByIdAndDelete(idParam);
 };
 
 // enviando meu objeto com as minhas funções para o restante da aplicação:

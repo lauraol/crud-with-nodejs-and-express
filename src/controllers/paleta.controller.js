@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 // declaração de um endpoint, no caso utilizando o método GET, nesse caso preparamos a aplicação para receber uma requisição e enviar uma resposta.
 // get all
 const findAllPaletasController = async (req, res) => {
-  const paletas = await paletasService.findAllPaletasService();
+  const allpaletas = await paletasService.findAllPaletasService();
 
-  if (paletas.length == 0) {
+  if (allpaletas.length == 0) {
     return res
       .status(404)
       .send({ message: 'Não existe nenhuma paleta cadastrada!' });
   }
-  res.send(paletas); // OBS: o send cria uma página html para que possamos acessar a API pelo navegador.
+  res.send(allpaletas); // OBS: o send cria uma página html para que possamos acessar a API pelo navegador.
 };
 
 // get by id
@@ -24,20 +24,20 @@ const findByIdPaletaController = async (req, res) => {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
-  const escolhaPaleta = await paletasService.findByIdPaletaService(idParam);
+  const chosenPaleta = await paletasService.findByIdPaletaService(idParam);
   /* 
     explicação da função abaixo:
     está sendo realizado um find, então esse find irá comparar o parametroId com o id vindo do objeto para ver se aquele id existe na nossa aplicação.
-    o id existindo na aplicação ele adiciona na const escolhaPaleta e apresenta a resposta para o usuário.
+    o id existindo na aplicação ele adiciona na const chosenPaleta e apresenta a resposta para o usuário.
    */
 
   // segunda validação:
   // a segunda validação irá verificar se esse id existe no nosso array de objetos.
-  if (!escolhaPaleta) {
+  if (!chosenPaleta) {
     return res.status(404).send({ message: 'Paleta não encontrada!' });
   }
 
-  res.send(escolhaPaleta);
+  res.send(chosenPaleta);
 };
 
 const createPaletaController = async (req, res) => {
@@ -67,15 +67,15 @@ const updatePaletaController = async (req, res) => {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
-  const paletaEdit = req.body; // recendo o body pq preciso saber o que irei trocar
+  const editPaleta = req.body; // recendo o body pq preciso saber o que irei trocar
 
   // validando se a paleta existe:
   if (
-    !paletaEdit ||
-    !paletaEdit.sabor ||
-    !paletaEdit.descricao ||
-    !paletaEdit.foto ||
-    !paletaEdit.preco
+    !editPaleta ||
+    !editPaleta.sabor ||
+    !editPaleta.descricao ||
+    !editPaleta.foto ||
+    !editPaleta.preco
   ) {
     return res
       .status(404)
@@ -84,7 +84,7 @@ const updatePaletaController = async (req, res) => {
 
   const updatedPaleta = await paletasService.updatePaletaService(
     idParam,
-    paletaEdit,
+    editPaleta,
   );
   res.send(updatedPaleta);
 };
