@@ -11,18 +11,15 @@ const findByIdPaletaService = async (parametroId) => {
   // return paletas.find((paleta) => paleta.id === parametroId); // comparando o id de paleta.id se é igual ao recebido em parametroId.
 };
 
-const createPaletaService = (newPaleta) => {
-  const newId = paletas.length + 1; // fazendo a criação de ids de forma automática para os novos objetos que entrarem.
-  newPaleta.id = newId; // criação de um novo campo.
-  paletas.push(newPaleta); // colocando a nova paleta no array de paletas.
-  return newPaleta;
+const createPaletaService = async (newPaleta) => {
+  // recebemos a newPaleta que vem do nosso controller.
+  const paletaCreated = await Paletas.create(newPaleta); // agora ao invés de push vamos usar o método create que é nativo para fazer a criação de uma nova paleta.
+  return paletaCreated; // retornando a paleta criada para o cliente.
 };
 
-const updatePaletaService = (id, paletaEdited) => {
-  paletaEdited['id'] = id; // pegando a paleta editada e adicionando o id que será modificado. O 'id' vem entre aspas pq estou procurando ele em paletaEdited.
-  const paletaIndex = paletas.findIndex((paleta) => paleta.id == id); // procurando o id que será alterado no meu array de objetos. Quando a função achar o id que estou pedindo ele será adicionado em paletaIndex.
-  paletas[paletaIndex] = paletaEdited; // procurando o index que foi adicionado na const paletaIndex no meu array de objetos paletas. OBS MUITO IMPORTANTE: o index não é o id de cada paleta e sim a posição de cada objeto no array começando em 0.
-  return paletaEdited; // retornando a paleta editada para a posição que ela ocupa no array de objetos.
+const updatePaletaService = async (id, paletaEdited) => {
+  const paletaUpdate = await Paletas.findByIdAndUpdate(id, paletaEdited); // o findByIdAndUpdate vai procurar o meu id lá no meu array de objetos e vai editar o item que está sendo pedido.
+  return paletaUpdate; // retornando a paleta editada.
 };
 
 const deletePaletaService = (id) => {

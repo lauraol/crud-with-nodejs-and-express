@@ -16,15 +16,15 @@ const findAllPaletasController = async (req, res) => {
 
 // get by id
 const findByIdPaletaController = async (req, res) => {
-  const parametroId = req.params.id;
+  const idParam = req.params.id;
 
   // primeira validação:
   // a primeira validação irá ver se recebemos um id no parametroId e se é um id valido e que temos lá no mongoose.
-  if (!mongoose.Types.ObjectId.isValid(parametroId)) {
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
-  const escolhaPaleta = await paletasService.findByIdPaletaService(parametroId);
+  const escolhaPaleta = await paletasService.findByIdPaletaService(idParam);
   /* 
     explicação da função abaixo:
     está sendo realizado um find, então esse find irá comparar o parametroId com o id vindo do objeto para ver se aquele id existe na nossa aplicação.
@@ -40,7 +40,7 @@ const findByIdPaletaController = async (req, res) => {
   res.send(escolhaPaleta);
 };
 
-const createPaletaController = (req, res) => {
+const createPaletaController = async (req, res) => {
   const paleta = req.body; // vem de lá do body no thunder client
 
   // validação para que não seja possível enviar nenhum dos campos vazios na nossa paleta.
@@ -55,15 +55,15 @@ const createPaletaController = (req, res) => {
       .status(400)
       .send({ message: 'Envie todos os campos da paleta!' });
   }
-  const newPaleta = paletasService.createPaletaService(paleta);
+  const newPaleta = await paletasService.createPaletaService(paleta); // aguardando o paleta service mandar a solicitação de criar a nova paleta no banco, por isso o await, para depois exibir.
   res.status(201).send(newPaleta);
 };
 
-const updatePaletaController = (req, res) => {
-  const idParam = Number(req.params.id); // recebendo o id
+const updatePaletaController = async (req, res) => {
+  const idParam = req.params.id; // recebendo o id
 
   // validando se o id é válido:
-  if (!idParam) {
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(400).send({ message: 'Id inválido!' });
   }
 
@@ -82,7 +82,10 @@ const updatePaletaController = (req, res) => {
       .send({ message: 'Envie todos os campos da paleta!' });
   }
 
-  const updatedPaleta = paletasService.updatePaletaService(idParam, paletaEdit);
+  const updatedPaleta = await paletasService.updatePaletaService(
+    idParam,
+    paletaEdit,
+  );
   res.send(updatedPaleta);
 };
 
